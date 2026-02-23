@@ -1,20 +1,131 @@
 body {
   margin: 0;
   font-family: "Tajawal", sans-serif;
-  background: linear-gradient(to bottom, #e0f2fe, #ffffff);
+  background: linear-gradient(to top, #fde68a 0%, #bae6fd 50%, #93c5fd 100%);
   color: #065f46;
   text-align: center;
   min-height: 100vh;
   overflow-x: hidden;
+  position: relative;
+  padding-bottom: 35vh;
 }
 
-#confetti {
+/* Sky */
+.sky {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -3;
   pointer-events: none;
 }
 
+.moon {
+  position: absolute;
+  top: 50px;
+  left: 40px;
+  width: 80px;
+  height: 80px;
+  background: #fff7d6;
+  border-radius: 50%;
+  box-shadow: 0 0 25px rgba(255,255,255,.6);
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 40% 20%, white, transparent),
+    radial-gradient(2px 2px at 70% 25%, white, transparent),
+    radial-gradient(2px 2px at 85% 40%, white, transparent),
+    radial-gradient(2px 2px at 60% 15%, white, transparent);
+}
+
+/* Garland lights */
+header {
+  padding-top: 140px;
+}
+
+.eid-garland {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 120px;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.garland-wire {
+  position: absolute;
+  top: 40px;
+  left: -5%;
+  width: 110%;
+  height: 80px;
+  border-top: 2px solid rgba(6,95,70,0.35);
+  border-radius: 0 0 100% 100%;
+}
+
+.eid-garland span {
+  position: absolute;
+  top: 70px;
+  width: 14px;
+  height: 22px;
+  background: linear-gradient(#fde68a, #f59e0b);
+  border-radius: 40% 40% 45% 45%;
+  box-shadow: 0 0 10px rgba(253,224,71,0.5);
+  animation: softGlow 3s ease-in-out infinite alternate;
+}
+
+.eid-garland span:nth-child(2) { left: 12%; }
+.eid-garland span:nth-child(3) { left: 28%; }
+.eid-garland span:nth-child(4) { left: 44%; }
+.eid-garland span:nth-child(5) { left: 60%; }
+.eid-garland span:nth-child(6) { left: 76%; }
+.eid-garland span:nth-child(7) { left: 90%; }
+
+@keyframes softGlow {
+  from {
+    opacity: 0.6;
+    box-shadow: 0 0 6px rgba(253,224,71,0.4);
+  }
+  to {
+    opacity: 1;
+    box-shadow: 0 0 14px rgba(253,224,71,0.8);
+  }
+}
+
+/* Town silhouette */
+.town-bg {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 35vh;
+  background:
+    linear-gradient(to top, rgba(34,197,94,.25), transparent),
+    repeating-linear-gradient(
+      to right,
+      #065f46 0 40px,
+      #047857 40px 80px,
+      #064e3b 80px 120px
+    );
+  clip-path: polygon(
+    0% 100%, 0% 60%, 10% 55%, 20% 65%, 30% 50%, 
+    40% 60%, 50% 45%, 60% 55%, 70% 48%, 
+    80% 60%, 90% 50%, 100% 60%, 100% 100%
+  );
+  opacity: 0.25;
+  z-index: -1;
+}
+
+/* Confetti */
+#confetti {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* Fireworks */
 #fireworks {
   position: absolute;
   inset: 0;
@@ -22,27 +133,6 @@ body {
   height: 100%;
   pointer-events: none;
   z-index: 0;
-}
-
-/* Garland */
-.eid-garland {
-  display: flex;
-  justify-content: center;
-  gap: 15px;
-  margin-top: 20px;
-}
-
-.eid-garland span {
-  width: 22px;
-  height: 22px;
-  background: #fde68a;
-  border-radius: 50%;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(10px); }
 }
 
 header {
@@ -154,4 +244,9 @@ button {
   width: 100%;
   max-width: 200px;
   margin: 15px auto;
+}
+
+@media (max-width: 600px) {
+  .town-bg { height: 45vh; }
+  body { padding-bottom: 45vh; }
 }
