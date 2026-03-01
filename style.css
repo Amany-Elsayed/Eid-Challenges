@@ -10,17 +10,12 @@ body {
   padding-bottom: 15vh;
 }
 
-/* Sky */
 .sky {
   position: fixed;
   inset: 0;
   z-index: -5;
   pointer-events: none;
 }
-
-/* ======================
-   GARLAND
-====================== */
 
 .garland-container {
   position: relative;
@@ -29,7 +24,6 @@ body {
   overflow: visible;
 }
 
-/* SVG wire */
 .garland-wire {
   position: absolute;
   top: 0;
@@ -44,7 +38,6 @@ body {
   stroke-width: 3;
 }
 
-/* Lantern base */
 .lantern {
   position: absolute;
   width: clamp(18px, 3vw, 30px);
@@ -54,7 +47,6 @@ body {
   box-shadow: 0 0 15px rgba(255,183,3,0.9);
 }
 
-/* lantern top */
 .lantern::before {
   content: "";
   position: absolute;
@@ -67,7 +59,6 @@ body {
   transform: translateX(-50%);
 }
 
-/* hanging string */
 .lantern::after {
   content: "";
   position: absolute;
@@ -78,12 +69,6 @@ body {
   background: #c9a24d;
   transform: translateX(-50%);
 }
-
-/* Positions set dynamically via JS */
-
-/* =======================
-   TOWN
-======================= */
 
 .town-bg {
   position: fixed;
@@ -115,7 +100,6 @@ body {
   pointer-events: none;
 }
 
-/* Fireworks */
 #fireworks-bg {
   position: fixed;
   inset: 0;
@@ -123,7 +107,6 @@ body {
   pointer-events: none;
 }
 
-/* Confetti */
 #confetti {
   position: fixed;
   inset: 0;
@@ -131,14 +114,12 @@ body {
   pointer-events: none;
 }
 
-/* Header */
 header {
   padding: 60px 20px 20px;
   position: relative;
   z-index: 1;
 }
 
-/* UI */
 .quote-box {
   background: rgba(255,255,255,0.85);
   border-radius: 20px;
@@ -149,7 +130,6 @@ header {
   box-shadow: 0 0 15px rgba(0,0,0,.1);
 }
 
-/* Quote share capture mode */
 .quote-box.share-mode .share-buttons {
   display: none;
 }
@@ -179,7 +159,6 @@ header {
   border-radius: 99px;
   transition: width 0.4s ease;
 }
-
 
 button {
   padding: 12px;
@@ -239,7 +218,6 @@ button {
   text-align: center;
 }
 
-/* Congrats modal */
 #congratsCard .congrats-img {
   width: 80%;
   max-width: 280px;

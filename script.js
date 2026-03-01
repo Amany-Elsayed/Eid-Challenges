@@ -267,8 +267,6 @@ function hexToRgb(hsl) {
 setInterval(createFirework, 2000);
 drawFireworks();
 
-// ─── Responsive Lantern Positioning ───────────────────────────────────────────
-
 function positionLanterns() {
   const path = document.getElementById('garland-path');
   const container = document.querySelector('.garland-container');
