@@ -213,4 +213,88 @@ function closeCongrats() {
   congratsModal.style.display = "none";
 }
 
-/* CONFETTI + FIREWORKS remain exactly as you sent */
+const fwCanvas = document.getElementById("fireworks-bg");
+const fwCtx = fwCanvas.getContext("2d");
+
+function resizeFW() {
+  fwCanvas.width = window.innerWidth;
+  fwCanvas.height = window.innerHeight;
+}
+resizeFW();
+window.addEventListener("resize", resizeFW);
+
+let particles = [];
+
+function createFirework() {
+  const x = Math.random() * fwCanvas.width;
+  const y = Math.random() * fwCanvas.height * 0.5;
+
+  for (let i = 0; i < 40; i++) {
+    particles.push({
+      x,
+      y,
+      angle: Math.random() * Math.PI * 2,
+      speed: Math.random() * 3 + 2,
+      alpha: 1,
+      color: `hsl(${Math.random()*360},100%,60%)`
+    });
+  }
+}
+
+function drawFireworks() {
+  fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+
+  particles.forEach((p, i) => {
+    fwCtx.beginPath();
+    fwCtx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+    fwCtx.fillStyle = p.color;
+    fwCtx.fill();
+
+    p.x += Math.cos(p.angle) * p.speed;
+    p.y += Math.sin(p.angle) * p.speed;
+    p.alpha -= 0.015;
+
+    if (p.alpha <= 0) particles.splice(i,1);
+  });
+
+  requestAnimationFrame(drawFireworks);
+}
+
+function hexToRgb(hsl) {
+  return "255,200,50";
+}
+
+setInterval(createFirework, 2000);
+drawFireworks();
+
+// ─── Responsive Lantern Positioning ───────────────────────────────────────────
+
+function positionLanterns() {
+  const path = document.getElementById('garland-path');
+  const container = document.querySelector('.garland-container');
+  const lanterns = document.querySelectorAll('.lantern');
+
+  if (!path || !container || !lanterns.length) return;
+
+  const containerW = container.offsetWidth;
+  const containerH = container.offsetHeight;
+  const totalLength = path.getTotalLength();
+  const positions = [0.05, 0.18, 0.33, 0.50, 0.67, 0.82, 0.95];
+
+  // stringHeight must match the ::after height in CSS (30px)
+  // topCapHeight must match the ::before height in CSS (8px)
+  const stringHeight = 30;
+  const topCapHeight = 8;
+
+  lanterns.forEach((lantern, i) => {
+    const point = path.getPointAtLength(positions[i] * totalLength);
+    const x = (point.x / 1000) * containerW;
+    const y = (point.y / 200) * containerH;
+    // wire point = top of string, string goes down stringHeight, then topCap, then lantern body
+    lantern.style.left = (x - lantern.offsetWidth / 2) + 'px';
+    lantern.style.top  = (y + stringHeight + topCapHeight) + 'px';
+  });
+}
+
+window.addEventListener('load', positionLanterns);
+window.addEventListener('resize', positionLanterns);

@@ -13,25 +13,28 @@
 <body>
 
 <canvas id="confetti"></canvas>
+<canvas id="fireworks-bg"></canvas>
 
-<!-- Sky decorations -->
 <div class="sky">
   <div class="moon"></div>
   <div class="stars"></div>
 </div>
 
-<!-- Elegant light garland -->
-<div class="eid-garland">
-  <div class="garland-wire"></div>
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
-  <span></span>
+<!-- Hanging Eid Decorations -->
+<div class="garland-container">
+  <svg class="garland-wire" viewBox="0 0 1000 200" preserveAspectRatio="xMidYMid meet">
+    <path id="garland-path" d="M0 -20 Q500 220 1000 -20" />
+  </svg>
+
+  <div class="lantern l1"></div>
+  <div class="lantern l2"></div>
+  <div class="lantern l3"></div>
+  <div class="lantern l4"></div>
+  <div class="lantern l5"></div>
+  <div class="lantern l6"></div>
+  <div class="lantern l7"></div>
 </div>
 
-<!-- Town silhouette -->
 <div class="town-bg"></div>
 
 <header>
@@ -46,10 +49,10 @@
     </div>
   </div>
 
+  <p id="progressText"></p>
   <div class="progress-container">
     <div class="progress-bar" id="progressBar"></div>
   </div>
-  <p id="progressText"></p>
 </header>
 
 <section class="calendar" id="calendar"></section>
@@ -64,13 +67,9 @@
 </div>
 
 <div class="modal" id="congratsModal">
-
-  <canvas id="fireworks"></canvas>
-
   <div class="modal-content" id="congratsCard">
     <h2>مبارك لك إتمام جميع التحديات</h2>
     <p class="gift-text">اليك هديتك يمكنك تحميلها او مشاركتها</p>
-
     <img src="assets/congrats.png" class="congrats-img">
 
     <div class="share-buttons">
@@ -83,5 +82,6 @@
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
