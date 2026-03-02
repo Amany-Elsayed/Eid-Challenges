@@ -25,7 +25,6 @@ const quotes = [
   "تقبل الله منا ومنكم شهر رمضان، وأسعدكم بعيده فرحاً وسروراً ورضا.",
   "أتمنى أن يكون عيد الفطر المبارك بمثابة سعادة وبهجة لنا جميعاً... كل عام وأنتم بخير.",
 ];
-
 const challenges = [
   "استيقظ قبل شروق الشمس لصلاة الفجر في المسجد",
   "اغتسل بكامل السنة قبل الخروج للصلاة",
@@ -74,26 +73,38 @@ const shareCongrats = document.getElementById("shareCongrats");
 dailyQuote.textContent = quotes[Math.floor(Math.random() * quotes.length)];
 
 shareTextBtn.onclick = () => {
-  if (navigator.share) navigator.share({ text: dailyQuote.textContent });
+  if (navigator.share) {
+    navigator.share({ text: dailyQuote.textContent });
+  }
 };
 
 async function captureHighQuality(element) {
-  element.classList.add("share-mode"); // ✅ added (same as Ramadan)
+  element.classList.add("share-mode");
 
   const canvas = await html2canvas(element, {
     scale: 3,
+    useCORS: true,
     backgroundColor: null,
   });
 
-  element.classList.remove("share-mode"); // ✅ added (same as Ramadan)
+  element.classList.remove("share-mode");
   return canvas;
 }
 
 shareImageBtn.onclick = async () => {
   const canvas = await captureHighQuality(quoteBox);
+
   canvas.toBlob((blob) => {
     const file = new File([blob], "quote.png", { type: "image/png" });
-    if (navigator.share) navigator.share({ files: [file] });
+
+    if (navigator.share) {
+      navigator.share({ files: [file] });
+    } else {
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "quote.png";
+      link.click();
+    }
   });
 };
 
@@ -105,10 +116,13 @@ downloadCongrats.onclick = () => {
 };
 
 shareCongrats.onclick = async () => {
-  const res = await fetch("assets/congrats.png");
-  const blob = await res.blob();
+  const response = await fetch("assets/congrats.png");
+  const blob = await response.blob();
   const file = new File([blob], "congrats.png", { type: "image/png" });
-  if (navigator.share) navigator.share({ files: [file] });
+
+  if (navigator.share) {
+    navigator.share({ files: [file] });
+  }
 };
 
 const completedTodayKey = "eid_last_completed_time";
@@ -213,86 +227,121 @@ function closeCongrats() {
   congratsModal.style.display = "none";
 }
 
-const fwCanvas = document.getElementById("fireworks-bg");
-const fwCtx = fwCanvas.getContext("2d");
+const fireworksCanvas = document.getElementById("fireworks");
+const fctx = fireworksCanvas.getContext("2d");
 
-function resizeFW() {
-  fwCanvas.width = window.innerWidth;
-  fwCanvas.height = window.innerHeight;
+function resizeFireworks() {
+  fireworksCanvas.width = window.innerWidth;
+  fireworksCanvas.height = window.innerHeight;
 }
-resizeFW();
-window.addEventListener("resize", resizeFW);
+window.addEventListener("resize", resizeFireworks);
+resizeFireworks();
 
-let particles = [];
+let fireworks = [];
 
 function createFirework() {
-  const x = Math.random() * fwCanvas.width;
-  const y = Math.random() * fwCanvas.height * 0.5;
+  const x = Math.random() * fireworksCanvas.width;
+  const y = Math.random() * fireworksCanvas.height * 0.5;
+
+  const colors = ["#22c55e", "#facc15", "#60a5fa", "#f472b6", "#a78bfa"];
 
   for (let i = 0; i < 40; i++) {
-    particles.push({
+    fireworks.push({
       x,
       y,
+      radius: 2,
+      color: colors[Math.floor(Math.random() * colors.length)],
       angle: Math.random() * Math.PI * 2,
-      speed: Math.random() * 3 + 2,
-      alpha: 1,
-      color: `hsl(${Math.random()*360},100%,60%)`
+      speed: Math.random() * 3 + 1,
+      life: 60,
     });
   }
 }
 
-function drawFireworks() {
-  fwCtx.clearRect(0,0,fwCanvas.width,fwCanvas.height);
+function animateFireworks() {
+  if (congratsModal.style.display !== "flex") {
+    fctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
+    requestAnimationFrame(animateFireworks);
+    return;
+  }
 
-  particles.forEach((p, i) => {
-    fwCtx.beginPath();
-    fwCtx.arc(p.x, p.y, 2, 0, Math.PI * 2);
-    fwCtx.fillStyle = p.color;
-    fwCtx.fill();
+  fctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
 
-    p.x += Math.cos(p.angle) * p.speed;
-    p.y += Math.sin(p.angle) * p.speed;
-    p.alpha -= 0.015;
+  fireworks.forEach((p, index) => {
+    const vx = Math.cos(p.angle) * p.speed;
+    const vy = Math.sin(p.angle) * p.speed;
 
-    if (p.alpha <= 0) particles.splice(i,1);
+    p.x += vx;
+    p.y += vy;
+    p.life--;
+
+    fctx.beginPath();
+    fctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    fctx.fillStyle = p.color;
+    fctx.fill();
+
+    if (p.life <= 0) fireworks.splice(index, 1);
   });
 
-  requestAnimationFrame(drawFireworks);
+  requestAnimationFrame(animateFireworks);
 }
 
-function hexToRgb(hsl) {
-  return "255,200,50";
+setInterval(() => {
+  if (congratsModal.style.display === "flex") {
+    createFirework();
+  }
+}, 800);
+
+animateFireworks();
+
+const bgCanvas = document.getElementById("bg-fireworks");
+const bgCtx = bgCanvas.getContext("2d");
+
+function resizeBG() {
+  bgCanvas.width = window.innerWidth;
+  bgCanvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resizeBG);
+resizeBG();
+
+let bgParticles = [];
+
+function createBGFirework() {
+  const x = Math.random() * bgCanvas.width;
+  const y = Math.random() * bgCanvas.height * 0.5;
+  const colors = ["#22c55e", "#facc15", "#60a5fa", "#f472b6", "#a78bfa"];
+
+  for (let i = 0; i < 30; i++) {
+    bgParticles.push({
+      x,
+      y,
+      angle: Math.random() * Math.PI * 2,
+      speed: Math.random() * 2 + 1,
+      life: 50,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    });
+  }
 }
 
-setInterval(createFirework, 2000);
-drawFireworks();
+function animateBGFireworks() {
+  bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
 
-function positionLanterns() {
-  const path = document.getElementById('garland-path');
-  const container = document.querySelector('.garland-container');
-  const lanterns = document.querySelectorAll('.lantern');
+  bgParticles.forEach((p,i)=>{
+    p.x += Math.cos(p.angle)*p.speed;
+    p.y += Math.sin(p.angle)*p.speed;
+    p.life--;
 
-  if (!path || !container || !lanterns.length) return;
+    bgCtx.beginPath();
+    bgCtx.arc(p.x,p.y,2,0,Math.PI*2);
+    bgCtx.fillStyle = p.color;
+    bgCtx.fill();
 
-  const containerW = container.offsetWidth;
-  const containerH = container.offsetHeight;
-  const totalLength = path.getTotalLength();
-  const positions = [0.05, 0.18, 0.33, 0.50, 0.67, 0.82, 0.95];
-
-  // stringHeight must match the ::after height in CSS (30px)
-  // topCapHeight must match the ::before height in CSS (8px)
-  const stringHeight = 30;
-  const topCapHeight = 8;
-
-  lanterns.forEach((lantern, i) => {
-    const point = path.getPointAtLength(positions[i] * totalLength);
-    const x = (point.x / 1000) * containerW;
-    const y = (point.y / 200) * containerH;
-    // wire point = top of string, string goes down stringHeight, then topCap, then lantern body
-    lantern.style.left = (x - lantern.offsetWidth / 2) + 'px';
-    lantern.style.top  = (y + stringHeight + topCapHeight) + 'px';
+    if(p.life<=0) bgParticles.splice(i,1);
   });
+
+  requestAnimationFrame(animateBGFireworks);
 }
 
-window.addEventListener('load', positionLanterns);
-window.addEventListener('resize', positionLanterns);
+setInterval(createBGFirework, 1500);
+animateBGFireworks();
+
