@@ -30,6 +30,7 @@ const challenges = [
   "اغتسل بكامل السنة قبل الخروج للصلاة",
   "ارتدِ أحسن ثيابك وأنظفها كما علّم النبي ﷺ",
   "تناول تمرات قبل الخروج للمصلى (وتراً: 1, 3, 5...)",
+  "خذ صورة جماعية مع كل من في البيت الآن",
   "ابدأ يومك بتكبيرات العيد من البيت حتى المسجد",
   "سِر لصلاة العيد من طريق وعد من طريق آخر",
   "حضّر نفسك للخطبة واستمع بانتباه للدروس",
@@ -51,11 +52,10 @@ const challenges = [
   "اتصل بشخص كنت على خلاف معه وصالحه",
   "زُر قبراً لأحد أقاربك وادعُ له",
   "اطعم والديك بيدك في غداء العيد",
-  "خذ صورة جماعية مع كل من في البيت الآن",
   "شارك تهنئة العيد لـ10 أشخاص على الأقل",
-  " اتصل بجدتك/جدك واستمع لذكريات عيدهم القديم",
+  "اتصل بجدتك/جدك واستمع لذكريات عيدهم القديم",
   "أعطِ عيدية لطفل دون أن يعرف من أنت",
-  "نوِّي صيام الست من شوال",
+  "انوِّي صيام الست من شوال",
 ];
 
 const dailyQuote = document.getElementById("dailyQuote");
@@ -306,10 +306,16 @@ resizeBG();
 
 let bgParticles = [];
 
+const bgColors = ["#22c55e", "#facc15", "#60a5fa", "#f472b6", "#a78bfa"];
+let bgColorIndex = 0;
+
 function createBGFirework() {
   const x = Math.random() * bgCanvas.width;
   const y = Math.random() * bgCanvas.height * 0.5;
-  const colors = ["#22c55e", "#facc15", "#60a5fa", "#f472b6", "#a78bfa"];
+
+  // Pick one color for this entire burst, then advance to the next
+  const color = bgColors[bgColorIndex % bgColors.length];
+  bgColorIndex++;
 
   for (let i = 0; i < 30; i++) {
     bgParticles.push({
@@ -318,7 +324,7 @@ function createBGFirework() {
       angle: Math.random() * Math.PI * 2,
       speed: Math.random() * 2 + 1,
       life: 50,
-      color: colors[Math.floor(Math.random() * colors.length)]
+      color: color
     });
   }
 }
@@ -344,4 +350,3 @@ function animateBGFireworks() {
 
 setInterval(createBGFirework, 1500);
 animateBGFireworks();
-

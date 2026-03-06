@@ -1,7 +1,13 @@
 body {
   margin: 0;
   font-family: "Tajawal", sans-serif;
-  background: linear-gradient(to top, #fde68a 0%, #bae6fd 50%, #93c5fd 100%);
+  background:
+    url("assets/bg.png"),
+    linear-gradient(to top, #fde68a 0%, #bae6fd 50%, #93c5fd 100%);
+  background-blend-mode: overlay;
+  background-size: 900px, cover;
+  background-repeat: repeat, no-repeat;
+  background-attachment: fixed;
   color: #065f46;
   text-align: center;
   min-height: 100vh;
@@ -10,7 +16,6 @@ body {
   padding-bottom: 15vh;
 }
 
-/* Background fireworks */
 #bg-fireworks {
   position: fixed;
   inset: 0;
@@ -18,7 +23,6 @@ body {
   pointer-events: none;
 }
 
-/* Lantern */
 .lantern-container {
   position: absolute;
   top: 0;
@@ -33,7 +37,7 @@ body {
 .lantern {
   width: 70px;
   height: 110px;
-  background: linear-gradient(180deg, #fde047, #f59e0b);
+  background: linear-gradient(180deg, #ffef9d, #f7d190);
   border-radius: 12px 12px 18px 18px;
   position: relative;
   box-shadow:
@@ -48,7 +52,7 @@ body {
   left: 50%;
   width: 40px;
   height: 18px;
-  background: linear-gradient(#334155, #0f172a);
+  background: linear-gradient(#814900, #ff9100);
   border-radius: 6px 6px 0 0;
   transform: translateX(-50%);
 }
@@ -60,7 +64,7 @@ body {
   left: 50%;
   width: 45px;
   height: 12px;
-  background: linear-gradient(#334155, #020617);
+  background: linear-gradient(#814900, #ff9100);
   border-radius: 0 0 8px 8px;
   transform: translateX(-50%);
 }
@@ -68,32 +72,48 @@ body {
 .lantern-light {
   position: absolute;
   inset: 18px;
-  background: radial-gradient(circle, rgba(255,255,255,0.9), rgba(255,255,255,0.2));
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.2)
+  );
   border-radius: 50%;
   animation: glow 2s infinite alternate;
 }
 
-/* Lantern animations */
 @keyframes swing {
-  0% { transform: translateX(-50%) rotate(0deg); }
-  25% { transform: translateX(-50%) rotate(3deg); }
-  50% { transform: translateX(-50%) rotate(0deg); }
-  75% { transform: translateX(-50%) rotate(-3deg); }
-  100% { transform: translateX(-50%) rotate(0deg); }
+  0% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  25% {
+    transform: translateX(-50%) rotate(3deg);
+  }
+  50% {
+    transform: translateX(-50%) rotate(0deg);
+  }
+  75% {
+    transform: translateX(-50%) rotate(-3deg);
+  }
+  100% {
+    transform: translateX(-50%) rotate(0deg);
+  }
 }
 
 @keyframes glow {
-  from { opacity: 0.7; }
-  to { opacity: 1; }
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 1;
+  }
 }
-
-/* Town background */
 
 .town-bg {
   position: fixed;
   bottom: 0;
   width: 100%;
-  height: 38vh;
+  height: 50vh;
+  min-height: 33vh;
   z-index: -1;
   background-color: transparent;
   overflow: hidden;
@@ -103,25 +123,24 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 300' preserveAspectRatio='xMidYMax meet'%3E%3C!-- Left small house --%3E%3Crect x='30' y='210' width='110' height='90' fill='%236b7280' opacity='0.45'/%3E%3Cpolygon points='20,210 85,165 150,210' fill='%236b7280' opacity='0.55'/%3E%3Crect x='58' y='238' width='24' height='30' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='98' y='238' width='20' height='20' fill='%23fde68a' opacity='0.45'/%3E%3C!-- Left medium house --%3E%3Crect x='175' y='185' width='135' height='115' fill='%236b7280' opacity='0.4'/%3E%3Cpolygon points='165,185 242,132 320,185' fill='%236b7280' opacity='0.5'/%3E%3Crect x='200' y='220' width='28' height='35' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='255' y='220' width='26' height='26' fill='%23fde68a' opacity='0.45'/%3E%3C!-- MOSQUE --%3E%3C!-- Left minaret --%3E%3Crect x='468' y='60' width='18' height='240' fill='%236b7280' opacity='0.5'/%3E%3Crect x='458' y='55' width='38' height='12' fill='%236b7280' opacity='0.55'/%3E%3Crect x='463' y='43' width='28' height='14' fill='%236b7280' opacity='0.55'/%3E%3Crect x='469' y='32' width='16' height='13' fill='%236b7280' opacity='0.55'/%3E%3Ctext x='468' y='30' font-size='11' fill='%23fde68a' opacity='0.75'%3E☽%3C/text%3E%3C!-- Right minaret --%3E%3Crect x='714' y='60' width='18' height='240' fill='%236b7280' opacity='0.5'/%3E%3Crect x='704' y='55' width='38' height='12' fill='%236b7280' opacity='0.55'/%3E%3Crect x='709' y='43' width='28' height='14' fill='%236b7280' opacity='0.55'/%3E%3Crect x='715' y='32' width='16' height='13' fill='%236b7280' opacity='0.55'/%3E%3Ctext x='714' y='30' font-size='11' fill='%23fde68a' opacity='0.75'%3E☽%3C/text%3E%3C!-- Mosque main body --%3E%3Crect x='490' y='155' width='220' height='145' fill='%236b7280' opacity='0.45'/%3E%3C!-- Left small dome --%3E%3Path d='M490,155 Q510,115 530,155 Z' fill='%236b7280' opacity='0.5'/%3E%3C!-- Right small dome --%3E%3Cpath d='M670,155 Q690,115 710,155 Z' fill='%236b7280' opacity='0.5'/%3E%3C!-- Main dome --%3E%3Cpath d='M520,155 Q600,75 680,155 Z' fill='%236b7280' opacity='0.5'/%3E%3C!-- Mosque windows --%3E%3Crect x='525' y='195' width='26' height='38' rx='13' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='575' y='185' width='30' height='48' rx='15' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='620' y='185' width='30' height='48' rx='15' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='668' y='195' width='26' height='38' rx='13' fill='%23fde68a' opacity='0.5'/%3E%3C!-- Mosque door --%3E%3Crect x='585' y='243' width='30' height='57' rx='15' fill='%23fde68a' opacity='0.4'/%3E%3C!-- Right medium house --%3E%3Crect x='880' y='185' width='135' height='115' fill='%236b7280' opacity='0.4'/%3E%3Cpolygon points='870,185 947,132 1025,185' fill='%236b7280' opacity='0.5'/%3E%3Crect x='905' y='220' width='28' height='35' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='958' y='220' width='26' height='26' fill='%23fde68a' opacity='0.45'/%3E%3C!-- Right small house --%3E%3Crect x='1060' y='210' width='110' height='90' fill='%236b7280' opacity='0.45'/%3E%3Cpolygon points='1050,210 1115,165 1180,210' fill='%236b7280' opacity='0.55'/%3E%3Crect x='1072' y='238' width='24' height='30' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='1112' y='238' width='20' height='20' fill='%23fde68a' opacity='0.45'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 300' preserveAspectRatio='xMidYMax meet'%3E%3C!-- Far left small house --%3E%3Crect x='0' y='220' width='70' height='80' fill='%236b7280' opacity='0.45'/%3E%3Cpolygon points='-5%2C220 35%2C185 75%2C220' fill='%236b7280' opacity='0.55'/%3E%3Crect x='10' y='245' width='18' height='22' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='42' y='245' width='16' height='16' fill='%23fde68a' opacity='0.45'/%3E%3C!-- Left medium house --%3E%3Crect x='75' y='195' width='95' height='105' fill='%236b7280' opacity='0.4'/%3E%3Cpolygon points='68%2C195 122%2C150 170%2C195' fill='%236b7280' opacity='0.5'/%3E%3Crect x='85' y='225' width='22' height='30' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='128' y='225' width='20' height='20' fill='%23fde68a' opacity='0.45'/%3E%3C!-- Left minaret --%3E%3Crect x='208' y='80' width='14' height='220' fill='%236b7280' opacity='0.5'/%3E%3Crect x='201' y='75' width='28' height='10' fill='%236b7280' opacity='0.55'/%3E%3Crect x='205' y='63' width='20' height='13' fill='%236b7280' opacity='0.55'/%3E%3Crect x='209' y='52' width='12' height='12' fill='%236b7280' opacity='0.55'/%3E%3Ctext x='206' y='50' font-size='12' fill='%23fde68a' opacity='0.85'%3E%u262A%3C/text%3E%3C!-- Right minaret --%3E%3Crect x='378' y='80' width='14' height='220' fill='%236b7280' opacity='0.5'/%3E%3Crect x='371' y='75' width='28' height='10' fill='%236b7280' opacity='0.55'/%3E%3Crect x='375' y='63' width='20' height='13' fill='%236b7280' opacity='0.55'/%3E%3Crect x='379' y='52' width='12' height='12' fill='%236b7280' opacity='0.55'/%3E%3Ctext x='376' y='50' font-size='12' fill='%23fde68a' opacity='0.85'%3E%u262A%3C/text%3E%3C!-- Mosque body --%3E%3Crect x='222' y='165' width='156' height='135' fill='%236b7280' opacity='0.45'/%3E%3C!-- Left small dome --%3E%3Cpath d='M222%2C165 Q236%2C138 250%2C165 Z' fill='%236b7280' opacity='0.5'/%3E%3C!-- Right small dome --%3E%3Cpath d='M350%2C165 Q364%2C138 378%2C165 Z' fill='%236b7280' opacity='0.5'/%3E%3C!-- Main dome --%3E%3Cpath d='M245%2C165 Q300%2C90 355%2C165 Z' fill='%236b7280' opacity='0.5'/%3E%3C!-- Mosque windows --%3E%3Crect x='238' y='195' width='20' height='32' rx='10' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='270' y='188' width='22' height='40' rx='11' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='308' y='188' width='22' height='40' rx='11' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='342' y='195' width='20' height='32' rx='10' fill='%23fde68a' opacity='0.5'/%3E%3C!-- Mosque door --%3E%3Crect x='289' y='245' width='22' height='55' rx='11' fill='%23fde68a' opacity='0.4'/%3E%3C!-- Right medium house --%3E%3Crect x='430' y='195' width='95' height='105' fill='%236b7280' opacity='0.4'/%3E%3Cpolygon points='423%2C195 477%2C150 532%2C195' fill='%236b7280' opacity='0.5'/%3E%3Crect x='440' y='225' width='22' height='30' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='482' y='225' width='20' height='20' fill='%23fde68a' opacity='0.45'/%3E%3C!-- Far right small house --%3E%3Crect x='530' y='220' width='70' height='80' fill='%236b7280' opacity='0.45'/%3E%3Cpolygon points='525%2C220 565%2C185 605%2C220' fill='%236b7280' opacity='0.55'/%3E%3Crect x='538' y='245' width='18' height='22' fill='%23fde68a' opacity='0.5'/%3E%3Crect x='568' y='245' width='16' height='16' fill='%23fde68a' opacity='0.45'/%3E%3C/svg%3E");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-position: bottom center;
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 30%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 25%);
 }
 
 .town-bg::after {
   content: none;
 }
 
-
 header {
   padding: 20px 20px 20px;
 }
 
 .quote-box {
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: 20px;
   padding: 20px;
   margin: 15px auto;
@@ -150,7 +169,7 @@ button {
 .progress-container {
   width: 90%;
   height: 14px;
-  background: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 99px;
   margin: 10px auto;
 }
@@ -187,7 +206,7 @@ button {
 .modal {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0, 0, 0, 0.6);
   display: none;
   justify-content: center;
   align-items: center;
@@ -228,4 +247,15 @@ button {
 .share-mode .share-buttons,
 .share-mode button {
   display: none !important;
+}
+
+@media (max-width: 768px) {
+  .town-bg {
+    height: 65vh;
+    min-height: 65vh;
+  }
+  .town-bg::before {
+    background-size: 100% 100%;
+    background-position: bottom center;
+  }
 }
