@@ -251,6 +251,9 @@ button {
 }
 
 @media (max-width: 768px) {
+  body {
+    background-position: center;
+  }
   .town-bg {
     height: 65vh;
     min-height: 65vh;
