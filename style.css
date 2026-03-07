@@ -6,7 +6,7 @@ body {
     linear-gradient(to top, #fde68a 0%, #bae6fd 50%, #93c5fd 100%);
   background-blend-mode: overlay;
   background-position: center;
-  background-size: 830px, cover;
+  background-size: 800px, cover;
   background-repeat: repeat, no-repeat;
   background-attachment: fixed;
   color: #065f46;
@@ -251,9 +251,6 @@ button {
 }
 
 @media (max-width: 768px) {
-  body {
-    background-position: center;
-  }
   .town-bg {
     height: 65vh;
     min-height: 65vh;
