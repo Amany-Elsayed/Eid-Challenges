@@ -5,6 +5,7 @@ body {
     url("assets/bg.png"),
     linear-gradient(to top, #fde68a 0%, #bae6fd 50%, #93c5fd 100%);
   background-blend-mode: overlay;
+  background-position: center;
   background-size: 830px, cover;
   background-repeat: repeat, no-repeat;
   background-attachment: fixed;
