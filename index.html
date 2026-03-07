@@ -13,12 +13,18 @@
 <body>
 
 <canvas id="bg-fireworks"></canvas>
-<canvas id="confetti"></canvas>
+<canvas id="confetti" style="position:fixed;inset:0;pointer-events:none;z-index:-1;"></canvas>
 
-<div class="lantern-container">
-  <div class="lantern">
-    <div class="lantern-light"></div>
-  </div>
+<div class="garland-wrapper">
+  <svg class="garland-svg" id="garland-svg" viewBox="0 0 1000 320" preserveAspectRatio="xMidYMin slice" xmlns="http://www.w3.org/2000/svg">
+
+    <path class="garland-stroke" d="M9,14 C9,14 2,9 2,5 a3.5,3.5 0 0 1 7,0 a3.5,3.5 0 0 1 7,0 c0,4 -5,9 -7,9 z" transform="translate(11,0)" style="fill: #888;"/>
+    <path class="garland-stroke" d="M9,14 C9,14 2,9 2,5 a3.5,3.5 0 0 1 7,0 a3.5,3.5 0 0 1 7,0 c0,4 -5,9 -7,9 z" transform="translate(971,0)" style="fill: #888;"/>
+
+    <path class="garland-stroke" d="M 20,2 Q 500,200 980,2" fill="none"/>
+    
+    <g id="garland-flags"></g>
+  </svg>
 </div>
 
 <div class="town-bg"></div>

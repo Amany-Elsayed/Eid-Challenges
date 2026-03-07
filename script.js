@@ -25,6 +25,7 @@ const quotes = [
   "تقبل الله منا ومنكم شهر رمضان، وأسعدكم بعيده فرحاً وسروراً ورضا.",
   "أتمنى أن يكون عيد الفطر المبارك بمثابة سعادة وبهجة لنا جميعاً... كل عام وأنتم بخير.",
 ];
+
 const challenges = [
   "استيقظ قبل شروق الشمس لصلاة الفجر في المسجد",
   "اغتسل بكامل السنة قبل الخروج للصلاة",
@@ -34,6 +35,7 @@ const challenges = [
   "ابدأ يومك بتكبيرات العيد من البيت حتى المسجد",
   "سِر لصلاة العيد من طريق وعد من طريق آخر",
   "حضّر نفسك للخطبة واستمع بانتباه للدروس",
+  "انوِّي صيام الست من شوال",
   "سلّم على شخص غريب في المصلى وتهادوا",
   "زُر أقرب قريب فوراً بعد الصلاة",
   " أعطِ عيدية لطفل دون أن يعرف من أنت",
@@ -55,7 +57,6 @@ const challenges = [
   "شارك تهنئة العيد لـ10 أشخاص على الأقل",
   "اتصل بجدتك/جدك واستمع لذكريات عيدهم القديم",
   "أعطِ عيدية لطفل دون أن يعرف من أنت",
-  "انوِّي صيام الست من شوال",
 ];
 
 const dailyQuote = document.getElementById("dailyQuote");
@@ -78,25 +79,104 @@ shareTextBtn.onclick = () => {
   }
 };
 
+function drawGarlandFlags() {
+  const group = document.getElementById("garland-flags");
+  group.innerHTML = "";
+
+  const NUM_FLAGS = 5;
+  const STRING_LEN = 10;
+  const FLAG_W = 18;
+  const FLAG_H = 76;
+
+  const FLAG_COLORS = [
+    "#f87171",
+    "#facc15",
+    "#4ade80",
+    "#60a5fa",
+    "#c084fc",
+  ];
+
+  const P0 = { x: 20, y: 2 };
+  const P1 = { x: 500, y: 200 };
+  const P2 = { x: 980, y: 2 };
+
+  function bezier(t) {
+    return {
+      x: (1 - t) ** 2 * P0.x + 2 * (1 - t) * t * P1.x + t ** 2 * P2.x,
+      y: (1 - t) ** 2 * P0.y + 2 * (1 - t) * t * P1.y + t ** 2 * P2.y,
+    };
+  }
+
+  for (let i = 0; i < NUM_FLAGS; i++) {
+    const t = (i + 1) / (NUM_FLAGS + 1);
+    const anchor = bezier(t);
+
+    const flagGroup = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "g",
+    );
+    flagGroup.setAttribute("transform", `translate(${anchor.x}, ${anchor.y})`);
+
+    const swayGroup = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "g",
+    );
+    swayGroup.setAttribute("id", `flag-${i}`);
+
+    const string = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "line",
+    );
+    string.setAttribute("class", "garland-string");
+    string.setAttribute("x1", 0);
+    string.setAttribute("y1", 0);
+    string.setAttribute("x2", 0);
+    string.setAttribute("y2", STRING_LEN);
+
+    const poly = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "polygon",
+    );
+    poly.setAttribute("class", "garland-flag");
+    const notchDepth = FLAG_H * 0.35;
+    poly.setAttribute(
+      "points",
+      `
+  ${-FLAG_W},${STRING_LEN}
+  ${FLAG_W},${STRING_LEN}
+  ${FLAG_W},${STRING_LEN + FLAG_H}
+  0,${STRING_LEN + FLAG_H - notchDepth}
+  ${-FLAG_W},${STRING_LEN + FLAG_H}
+`,
+    );
+    poly.setAttribute("fill", FLAG_COLORS[i % FLAG_COLORS.length]);
+    poly.setAttribute("stroke", "#888");
+
+    swayGroup.appendChild(string);
+    swayGroup.appendChild(poly);
+    flagGroup.appendChild(swayGroup);
+    group.appendChild(flagGroup);
+  }
+}
+
+drawGarlandFlags();
+window.addEventListener("resize", drawGarlandFlags);
+
 async function captureHighQuality(element) {
   element.classList.add("share-mode");
-
   const canvas = await html2canvas(element, {
     scale: 3,
     useCORS: true,
     backgroundColor: null,
   });
-
   element.classList.remove("share-mode");
   return canvas;
 }
 
 shareImageBtn.onclick = async () => {
   const canvas = await captureHighQuality(quoteBox);
-
   canvas.toBlob((blob) => {
     const file = new File([blob], "quote.png", { type: "image/png" });
-
     if (navigator.share) {
       navigator.share({ files: [file] });
     } else {
@@ -119,7 +199,6 @@ shareCongrats.onclick = async () => {
   const response = await fetch("assets/congrats.png");
   const blob = await response.blob();
   const file = new File([blob], "congrats.png", { type: "image/png" });
-
   if (navigator.share) {
     navigator.share({ files: [file] });
   }
@@ -149,11 +228,9 @@ for (let i = 1; i <= 30; i++) {
   const day = document.createElement("div");
   day.className = "day";
   day.textContent = "اليوم " + i;
-
   if (localStorage.getItem("eid_day" + i)) {
     day.classList.add("completed");
   }
-
   day.onclick = () => openChallenge(i);
   calendar.appendChild(day);
 }
@@ -211,11 +288,9 @@ function updateProgress() {
   for (let i = 1; i <= 30; i++) {
     if (localStorage.getItem("eid_day" + i)) completed++;
   }
-
   const percent = Math.round((completed / 30) * 100);
   progressBar.style.width = percent + "%";
   progressText.textContent = `نسبة الإنجاز: ${percent}%`;
-
   if (percent === 100) {
     congratsModal.style.display = "flex";
   }
@@ -242,9 +317,7 @@ let fireworks = [];
 function createFirework() {
   const x = Math.random() * fireworksCanvas.width;
   const y = Math.random() * fireworksCanvas.height * 0.5;
-
   const colors = ["#22c55e", "#facc15", "#60a5fa", "#f472b6", "#a78bfa"];
-
   for (let i = 0; i < 40; i++) {
     fireworks.push({
       x,
@@ -264,32 +337,22 @@ function animateFireworks() {
     requestAnimationFrame(animateFireworks);
     return;
   }
-
   fctx.clearRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
-
   fireworks.forEach((p, index) => {
-    const vx = Math.cos(p.angle) * p.speed;
-    const vy = Math.sin(p.angle) * p.speed;
-
-    p.x += vx;
-    p.y += vy;
+    p.x += Math.cos(p.angle) * p.speed;
+    p.y += Math.sin(p.angle) * p.speed;
     p.life--;
-
     fctx.beginPath();
     fctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
     fctx.fillStyle = p.color;
     fctx.fill();
-
     if (p.life <= 0) fireworks.splice(index, 1);
   });
-
   requestAnimationFrame(animateFireworks);
 }
 
 setInterval(() => {
-  if (congratsModal.style.display === "flex") {
-    createFirework();
-  }
+  if (congratsModal.style.display === "flex") createFirework();
 }, 800);
 
 animateFireworks();
@@ -305,18 +368,14 @@ window.addEventListener("resize", resizeBG);
 resizeBG();
 
 let bgParticles = [];
-
 const bgColors = ["#22c55e", "#facc15", "#60a5fa", "#f472b6", "#a78bfa"];
 let bgColorIndex = 0;
 
 function createBGFirework() {
   const x = Math.random() * bgCanvas.width;
   const y = Math.random() * bgCanvas.height * 0.5;
-
-  // Pick one color for this entire burst, then advance to the next
   const color = bgColors[bgColorIndex % bgColors.length];
   bgColorIndex++;
-
   for (let i = 0; i < 30; i++) {
     bgParticles.push({
       x,
@@ -324,27 +383,23 @@ function createBGFirework() {
       angle: Math.random() * Math.PI * 2,
       speed: Math.random() * 2 + 1,
       life: 50,
-      color: color
+      color,
     });
   }
 }
 
 function animateBGFireworks() {
-  bgCtx.clearRect(0,0,bgCanvas.width,bgCanvas.height);
-
-  bgParticles.forEach((p,i)=>{
-    p.x += Math.cos(p.angle)*p.speed;
-    p.y += Math.sin(p.angle)*p.speed;
+  bgCtx.clearRect(0, 0, bgCanvas.width, bgCanvas.height);
+  bgParticles.forEach((p, i) => {
+    p.x += Math.cos(p.angle) * p.speed;
+    p.y += Math.sin(p.angle) * p.speed;
     p.life--;
-
     bgCtx.beginPath();
-    bgCtx.arc(p.x,p.y,2,0,Math.PI*2);
+    bgCtx.arc(p.x, p.y, 2, 0, Math.PI * 2);
     bgCtx.fillStyle = p.color;
     bgCtx.fill();
-
-    if(p.life<=0) bgParticles.splice(i,1);
+    if (p.life <= 0) bgParticles.splice(i, 1);
   });
-
   requestAnimationFrame(animateBGFireworks);
 }
 
