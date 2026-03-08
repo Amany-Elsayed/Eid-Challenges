@@ -19,8 +19,7 @@ body {
   scroll-behavior: smooth;
 }
 
-body::before {
-  content: "";
+#bg-fixed {
   position: fixed;
   inset: 0;
   z-index: -3;
@@ -31,6 +30,8 @@ body::before {
   background-position: center;
   background-size: 800px, cover;
   background-repeat: repeat, no-repeat;
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 #bg-fireworks {
