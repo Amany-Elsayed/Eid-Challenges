@@ -3,6 +3,7 @@ html {
   max-width: 100%;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 body {
@@ -11,7 +12,7 @@ body {
   background: none;
   color: #065f46;
   text-align: center;
-  min-height: 100vh;
+  min-height: 100%;
   overflow-x: hidden;
   max-width: 100vw;
   position: relative;
@@ -21,7 +22,10 @@ body {
 
 #bg-fixed {
   position: fixed;
-  inset: 0;
+  top: -30px;
+  left: -30px;
+  right: -30px;
+  bottom: -30px;
   z-index: -3;
   background:
     url("assets/bg.png"),
