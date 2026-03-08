@@ -8,14 +8,7 @@ html {
 body {
   margin: 0;
   font-family: "Tajawal", sans-serif;
-  background:
-    url("assets/bg.png"),
-    linear-gradient(to top, #fde68a 0%, #bae6fd 50%, #93c5fd 100%);
-  background-blend-mode: overlay;
-  background-position: center;
-  background-size: 800px, cover;
-  background-repeat: repeat, no-repeat;
-  background-attachment: fixed;
+  background: none;
   color: #065f46;
   text-align: center;
   min-height: 100vh;
@@ -24,6 +17,20 @@ body {
   position: relative;
   padding-bottom: 15vh;
   scroll-behavior: smooth;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background:
+    url("assets/bg.png"),
+    linear-gradient(to top, #fde68a 0%, #bae6fd 50%, #93c5fd 100%);
+  background-blend-mode: overlay;
+  background-position: center;
+  background-size: 800px, cover;
+  background-repeat: repeat, no-repeat;
 }
 
 #bg-fireworks {
